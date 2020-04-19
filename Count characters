@@ -1,0 +1,128 @@
+package First;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+/**
+ * 统计字符串中数字,字母,空格7a686964616fe78988e69d8331333337386665,其他字符的个数
+ * @author Administrator
+ *
+ */
+public class Ch {
+	static int count = 0;
+    public static void main(String[] args) {
+     //   int englishCount = 0;// 英文字母个数
+      //  int spaceCount = 0;// 空格个数
+      //  int numCount = 0;// 数字个数
+       // int otherCount = 0;// 其他字符个数
+    	int gap = 10;
+        JFrame fra = new JFrame("字符数计算");
+		fra.setSize(410, 400);
+		fra.setLocation(200, 200);
+		fra.setLayout(null);
+		
+		JPanel pInput = new JPanel();
+		pInput.setBounds(gap, gap, 375, 120);
+		pInput.setLayout(new GridLayout(4,3,gap,gap));
+        
+		JLabel charc = new JLabel("字符数:");
+		JTextField locationText = new JTextField();
+		
+		JLabel sum = new JLabel("总数:");
+		JTextField typeText = new JTextField();
+		
+		JButton calc = new JButton("计算");
+		JButton clr = new JButton("复位");
+		
+		pInput.add(charc);
+		pInput.add(locationText);
+		pInput.add(sum);
+		pInput.add(typeText);
+		
+		calc.setBounds(80, 120 + 30, 80, 30);
+		clr.setBounds(220, 120 + 30, 80, 30);
+        
+      //  System.out.println("字母的个数：" + englishCount);
+      //  System.out.println("数字的个数：" + numCount);
+      //  System.out.println("空格的个数：" + spaceCount);
+      //  System.out.println("其他字符的个数：" + otherCount);
+        fra.add(pInput);
+        fra.add(calc);
+        fra.add(clr);
+		fra.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		fra.setVisible(true);
+		
+      //鼠标监听
+        calc.addActionListener(new ActionListener(){
+    		
+            boolean checkedpass = true;
+            //int count = 0;   // 总数
+        	public void actionPerformed(ActionEvent e){
+	    	checkedpass = true;
+	    	checkEmpty(locationText,"字符数:");
+			String str = locationText.getText();
+			if(checkedpass){
+				char[] ch = str.toCharArray();// 把取到的字符串变成一个char数组
+		        for (int i = 0; i < ch.length; i++) {
+		            if (Character.isLetter(ch[i])) {
+		                  // 判断是否为字母
+		                 count = count + 1;
+		             } else if (Character.isSpaceChar(ch[i])) {
+		                    // 判断是否为空格
+		                 count = count + 1;
+		             } else if (Character.isDigit(ch[i])) {
+		                    // 判断是否为数字
+		                 count = count + 1;
+		             } else {
+		                    // 以上都不是则认为是其他字符
+		                 count = count + 1;
+		            }
+		            }
+					typeText.setText(String.valueOf(count));
+				}
+				}
+	    	//检验是否为空
+	    	private void checkEmpty(JTextField tf, String msg){
+	    		if(!checkedpass)
+	    			return;
+	    		String value = tf.getText();
+	    		if(value.length()==0){
+	    			JOptionPane.showMessageDialog(fra, msg + " 不能为空");
+	    			tf.grabFocus();
+	    			checkedpass = false;
+	    		}
+	    	}
+	    });
+        
+        clr.addActionListener(new ActionListener(){
+        	boolean checkedpass = true;
+        	public void actionPerformed(ActionEvent e){
+    	    	checkedpass = true;
+    	    	checkEmpty(locationText,"字符数:");
+    	    	checkEmpty(typeText,"总数:");
+    	    	if(checkedpass){
+    	    		locationText.setText("");
+    	    		typeText.setText("");
+    	    		count = 0;
+    	    	}
+    	    	
+        	}
+        	private void checkEmpty(JTextField tf, String msg){
+	    		if(!checkedpass)
+	    			return;
+	    		String value = tf.getText();
+	    		if(value.length()==0){
+	    			JOptionPane.showMessageDialog(fra, msg + " 不能为空");
+	    			tf.grabFocus();
+	    			checkedpass = false;
+	    		}
+	    	}
+        });
+        }
+        
+    }
